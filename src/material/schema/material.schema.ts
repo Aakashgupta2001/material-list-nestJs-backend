@@ -1,0 +1,26 @@
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { User, UserSchema  } from 'src/user/schemas/user.schema';
+import * as mongoose from 'mongoose';
+
+
+export type MaterialDocument = Material & Document;
+
+@Schema()
+export class Material {
+
+  @Prop({ required: true })
+  name: string;
+
+  @Prop()
+  description: string;
+
+  @Prop({required: true, type: mongoose.Schema.Types.ObjectId, ref: 'User'})
+  user: User;
+
+
+
+  @Prop({ default: true })
+  active: boolean;
+}
+
+export const MaterialSchema = SchemaFactory.createForClass(Material);
