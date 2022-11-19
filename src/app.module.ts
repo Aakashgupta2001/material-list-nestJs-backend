@@ -6,9 +6,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { MaterialModule } from './material/material.module';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './auth/guards/role/roles.guard';
 import { JwtGuard } from './auth/guards/jwt/jwt.guard';
+import { AllExceptionsFilter } from './helpers/errorHandler/all-exceptions.filter';
 
 @Module({
   imports: [
@@ -33,6 +34,10 @@ import { JwtGuard } from './auth/guards/jwt/jwt.guard';
     {
       provide: APP_GUARD,
       useClass: JwtGuard,
+    },
+    {
+      provide: APP_FILTER,
+      useClass: AllExceptionsFilter,
     },
   ],
 })

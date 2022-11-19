@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
@@ -77,7 +77,9 @@ export class AuthService {
 
     const user = await this.validateUser(email, password);
 
-    if (!user) return null;
+    if (!user) {
+      throw new HttpException('Invalid Credentials', HttpStatus.NOT_FOUND);
+    }
 
     const jwt = await this.jwtService.signAsync({ user });
 
