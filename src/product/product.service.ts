@@ -9,6 +9,7 @@ import {
 import { generateRandomString } from 'src/helpers/helpers';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+const mongoService = require('../helpers/mongoService/mongoService');
 
 @Injectable()
 export class ProductService {
@@ -19,17 +20,13 @@ export class ProductService {
   async create(createProductDto: CreateProductDto): Promise<productDocument> {
     const { productCode, productName, material, user, active } =
       createProductDto;
-    const uid = await generateRandomString('pro', this.productModel, { user });
-    const newProduct = new this.productModel({
-      uid: uid,
-      productCode,
-      productName,
-      material,
-      user,
-      active,
-    });
+    createProductDto['uid'] = await generateRandomString(
+      'pro',
+      this.productModel,
+      { user },
+    );
 
-    return newProduct.save();
+    return await mongoService.create(this.productModel, createProductDto);
   }
 
   findAll() {
