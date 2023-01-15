@@ -12,6 +12,7 @@ import { MaterialService } from './material.service';
 import { CreateMaterialDto } from './dto/create-material.dto';
 import { UpdateMaterialDto } from './dto/update-material.dto';
 import { ObjectId } from 'mongoose';
+import { Request } from 'express';
 
 @Controller('material')
 export class MaterialController {
