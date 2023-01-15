@@ -1,11 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { CreateMaterialDto } from './dto/create-material.dto';
 import { UpdateMaterialDto } from './dto/update-material.dto';
-
+const mongoService = require('../helpers/mongoService/mongoService')
 @Injectable()
 export class MaterialService {
+
   create(createMaterialDto: CreateMaterialDto) {
-    return 'This action adds a new material';
+    mongoService.create("sada", "SAdas")
+    return `This action adds a new material, ${CreateMaterialDto}`;
   }
 
   findAll() {
