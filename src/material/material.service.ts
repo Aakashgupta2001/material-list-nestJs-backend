@@ -6,8 +6,9 @@ import { Body } from '@nestjs/common/decorators/http/route-params.decorator';
 import { CreateMaterialDto } from './dto/create-material.dto';
 import { UpdateMaterialDto } from './dto/update-material.dto';
 import { MaterialDocument, Material } from './schema/material.schema';
-const mongoService = require('../helpers/mongoService/mongoService')
 import {generateRandomString} from "../helpers/helpers"
+
+const mongoService = require('../helpers/mongoService/mongoService')
 @Injectable()
 export class MaterialService {
 

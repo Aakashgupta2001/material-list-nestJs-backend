@@ -18,13 +18,8 @@ export class ProductService {
   ) {}
 
   async create(createProductDto: CreateProductDto): Promise<productDocument> {
-    const { productCode, productName, material, user, active } =
-      createProductDto;
-    createProductDto['uid'] = await generateRandomString(
-      'pro',
-      this.productModel,
-      { user },
-    );
+    const { user } = createProductDto;
+    createProductDto['uid'] = await generateRandomString('pro',this.productModel,{ user });
 
     return await mongoService.create(this.productModel, createProductDto);
   }
