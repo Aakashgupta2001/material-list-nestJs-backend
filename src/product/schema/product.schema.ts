@@ -1,7 +1,9 @@
-import { Prop, Schema } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 import { User } from 'src/user/schemas/user.schema';
 import { Material } from 'src/material/schema/material.schema';
+
+export type productDocument = Product & Document;
 
 @Schema()
 export class Product {
@@ -27,3 +29,5 @@ export class Product {
   @Prop({ default: true })
   active: boolean;
 }
+
+export const ProductSchema = SchemaFactory.createForClass(Product);
