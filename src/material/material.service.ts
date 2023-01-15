@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, ObjectId } from 'mongoose';
+import { Model, mongo, ObjectId } from 'mongoose';
 
 import { Body } from '@nestjs/common/decorators/http/route-params.decorator';
 import { CreateMaterialDto } from './dto/create-material.dto';
@@ -48,7 +48,10 @@ export class MaterialService {
     );
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} material`;
+  async remove(id: ObjectId, request) {
+    return await mongoService.findOneAndHardDelete(this.materialModel, {
+      user: request.user.id,
+      _id: id,
+    });
   }
 }
