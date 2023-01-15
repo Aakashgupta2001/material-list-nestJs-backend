@@ -1,4 +1,4 @@
-import {IsNotEmpty, IsOptional } from 'class-validator';
+import { IsNotEmpty, IsOptional } from 'class-validator';
 import { ObjectId } from 'mongoose';
 
 export class CreateMaterialDto {
@@ -16,24 +16,21 @@ export class CreateMaterialDto {
 
   @IsOptional()
   hsn: string;
-  
+
   @IsOptional()
   igst: string;
-  
+
   @IsOptional()
   sgst: string;
-  
+
   @IsOptional()
   remark: string;
 
   @IsOptional()
   rate: Number;
-  
+
   @IsNotEmpty()
   materialType: String;
-  
-  @IsNotEmpty()
-  user: ObjectId;
 
   @IsOptional()
   active: boolean;
