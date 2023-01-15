@@ -1,13 +1,23 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+
+import { Body } from '@nestjs/common/decorators/http/route-params.decorator';
 import { CreateMaterialDto } from './dto/create-material.dto';
 import { UpdateMaterialDto } from './dto/update-material.dto';
+import { MaterialDocument, Material } from './schema/material.schema';
 const mongoService = require('../helpers/mongoService/mongoService')
+import {generateRandomString} from "../helpers/helpers"
 @Injectable()
 export class MaterialService {
 
-  create(createMaterialDto: CreateMaterialDto) {
-    mongoService.create("sada", "SAdas")
-    return `This action adds a new material, ${CreateMaterialDto}`;
+  constructor(@InjectModel(Material.name) private materialModel: Model<MaterialDocument>) {}
+
+  async create(createMaterialDto: CreateMaterialDto) {
+    let materialBody = {...createMaterialDto}
+    materialBody["uid"] = await generateRandomString("Mat", this.materialModel, {user: createMaterialDto.user})
+    console.log(materialBody)
+    return await mongoService.create(this.materialModel, materialBody);
   }
 
   findAll() {

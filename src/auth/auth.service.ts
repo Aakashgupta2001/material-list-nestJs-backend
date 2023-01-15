@@ -81,7 +81,7 @@ export class AuthService {
       throw new HttpException('Invalid Credentials', HttpStatus.NOT_FOUND);
     }
 
-    const jwt = await this.jwtService.signAsync({ user });
+    const jwt = await this.jwtService.signAsync({ user }, {expiresIn: '365d'});
 
     return { token: jwt };
   }

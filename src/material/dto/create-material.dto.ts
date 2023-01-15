@@ -9,7 +9,7 @@ export class CreateMaterialDto {
   description: string;
 
   @IsNotEmpty()
-  matId: string;
+  matCode: string;
 
   @IsOptional()
   rackNo: string;
@@ -28,6 +28,12 @@ export class CreateMaterialDto {
 
   @IsOptional()
   rate: Number;
+  
+  @IsNotEmpty()
+  materialType: String;
+  
+  @IsNotEmpty()
+  user: ObjectId;
 
   @IsOptional()
   active: boolean;

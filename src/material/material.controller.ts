@@ -8,8 +8,8 @@ export class MaterialController {
   constructor(private readonly materialService: MaterialService) {}
 
   @Post()
-  create(@Body() createMaterialDto: CreateMaterialDto) {
-    return this.materialService.create(createMaterialDto);
+  create(@Body() createMaterialDto: CreateMaterialDto, ) {
+    return this.materialService.create(createMaterialDto );
   }
 
   @Get()

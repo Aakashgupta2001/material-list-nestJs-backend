@@ -37,6 +37,9 @@ export class Material {
 
   @Prop()
   rate: Number;
+  
+  @Prop()
+  materialType: String;
 
   @Prop({required: true, type: mongoose.Schema.Types.ObjectId, ref: 'User'})
   user: User;
