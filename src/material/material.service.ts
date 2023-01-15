@@ -14,10 +14,8 @@ export class MaterialService {
   constructor(@InjectModel(Material.name) private materialModel: Model<MaterialDocument>) {}
 
   async create(createMaterialDto: CreateMaterialDto) {
-    let materialBody = {...createMaterialDto}
-    materialBody["uid"] = await generateRandomString("Mat", this.materialModel, {user: createMaterialDto.user})
-    console.log(materialBody)
-    return await mongoService.create(this.materialModel, materialBody);
+    createMaterialDto["uid"] = await generateRandomString("Mat", this.materialModel, {user: createMaterialDto.user})
+    return await mongoService.create(this.materialModel, createMaterialDto);
   }
 
   findAll() {
