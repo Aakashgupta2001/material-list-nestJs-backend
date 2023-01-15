@@ -19,12 +19,14 @@ export class ProductService {
     @InjectModel(Product.name) private productModel: Model<productDocument>,
   ) {}
 
-  async create(createProductDto: CreateProductDto): Promise<productDocument> {
-    const { user } = createProductDto;
+  async create(
+    createProductDto: CreateProductDto,
+    request,
+  ): Promise<productDocument> {
     createProductDto['uid'] = await generateRandomString(
       'pro',
       this.productModel,
-      { user },
+      { user: request.user.id },
     );
 
     return await mongoService.create(this.productModel, createProductDto);

@@ -11,9 +11,6 @@ export class CreateProductDto {
   @IsNotEmpty()
   material: [ObjectId];
 
-  @IsNotEmpty()
-  user: ObjectId;
-
   @IsOptional()
   active: boolean;
 }
