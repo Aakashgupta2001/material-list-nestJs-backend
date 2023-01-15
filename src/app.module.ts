@@ -10,6 +10,7 @@ import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './auth/guards/role/roles.guard';
 import { JwtGuard } from './auth/guards/jwt/jwt.guard';
 import { AllExceptionsFilter } from './helpers/errorHandler/all-exceptions.filter';
+import { ProductModule } from './product/product.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { AllExceptionsFilter } from './helpers/errorHandler/all-exceptions.filte
     UserModule,
     AuthModule,
     MaterialModule,
+    ProductModule,
   ],
   controllers: [AppController],
   providers: [
