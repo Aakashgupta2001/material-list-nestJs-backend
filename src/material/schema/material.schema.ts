@@ -13,11 +13,33 @@ export class Material {
 
   @Prop()
   description: string;
+  
+  @Prop({required: true})
+  uid: string;
+  
+  @Prop({required: true})
+  matCode: string;
+
+  @Prop()
+  rackNo: string;
+
+  @Prop()
+  hsn: string;
+  
+  @Prop()
+  igst: string;
+  
+  @Prop()
+  sgst: string;
+  
+  @Prop()
+  remark: string;
+
+  @Prop()
+  rate: Number;
 
   @Prop({required: true, type: mongoose.Schema.Types.ObjectId, ref: 'User'})
   user: User;
-
-
 
   @Prop({ default: true })
   active: boolean;
