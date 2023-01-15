@@ -39,7 +39,7 @@ export class MaterialService {
   }
 
   async update(id: ObjectId, updateMaterialDto: UpdateMaterialDto, req) {
-    return await mongoService.upsert(
+    return await mongoService.update(
       this.materialModel,
       { user: req.user.id, _id: id },
       {

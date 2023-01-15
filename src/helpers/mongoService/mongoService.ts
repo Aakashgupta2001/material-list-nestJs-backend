@@ -19,13 +19,17 @@ exports.upsert = async (model, filter, body) => {
   );
 };
 exports.update = async (model, filter, body) => {
-  return await model.findOneAndUpdate(filter, body, {
-    new: true,
-    upsert: true,
-    runValidators: true,
-    context: 'query',
-    // runValidators:true,
-  });
+  return await model.findOneAndUpdate(
+    filter,
+    { $set: { ...body } },
+    {
+      new: true,
+      upsert: false,
+      runValidators: true,
+      context: 'query',
+      // runValidators:true,
+    },
+  );
 };
 
 // find and filter
