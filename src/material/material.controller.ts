@@ -45,7 +45,7 @@ export class MaterialController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.materialService.remove(+id);
+  remove(@Param('id') id: ObjectId, @Req() request: Request) {
+    return this.materialService.remove(id, request);
   }
 }
