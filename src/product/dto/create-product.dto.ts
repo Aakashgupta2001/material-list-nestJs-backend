@@ -9,7 +9,7 @@ export class CreateProductDto {
   productName: string;
 
   @IsNotEmpty()
-  material: [ObjectId];
+  material: [{ material: ObjectId; qty: Number }];
 
   @IsOptional()
   active: boolean;
