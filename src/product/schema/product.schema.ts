@@ -18,10 +18,20 @@ export class Product {
 
   @Prop({
     required: true,
-    type: [mongoose.Schema.Types.ObjectId],
-    ref: 'Material',
+    type: [
+      {
+        material: { type: [mongoose.Schema.Types.ObjectId], ref: 'Material' },
+        qty: Number,
+      },
+    ],
+    // ref: 'Material',
   })
-  material: Material;
+  material: [
+    {
+      material: { type: [mongoose.Schema.Types.ObjectId]; ref: 'Material' };
+      qty: Number;
+    },
+  ];
 
   @Prop({ required: true, type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user: User;

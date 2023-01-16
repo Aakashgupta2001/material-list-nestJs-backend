@@ -10,6 +10,7 @@ import {
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { MaterialFromProductDto } from './dto/material-product.dto';
 import { Req } from '@nestjs/common/decorators';
 import { Request } from 'express';
 import { ObjectId } from 'mongoose';
@@ -45,5 +46,18 @@ export class ProductController {
   @Delete(':id')
   remove(@Param('id') id: ObjectId, @Req() request: Request) {
     return this.productService.remove(id, request);
+  }
+
+  @Post('material/:id')
+  materialFromProduct(
+    @Body() materialFromProduct: MaterialFromProductDto,
+    @Param('id') id: ObjectId,
+    @Req() request: Request,
+  ) {
+    return this.productService.materialFromProduct(
+      materialFromProduct,
+      id,
+      request,
+    );
   }
 }
