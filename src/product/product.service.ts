@@ -12,6 +12,7 @@ import { Model, ObjectId } from 'mongoose';
 import { UserDetails } from 'src/user/interfaces/userDetails.interface';
 const mongoService = require('../helpers/mongoService/mongoService');
 import { Request } from 'express';
+import { MaterialFromProductDto } from './dto/material-product.dto';
 
 @Injectable()
 export class ProductService {
@@ -58,5 +59,21 @@ export class ProductService {
       user: request.user.id,
       _id: id,
     });
+  }
+
+  async materialFromProduct(
+    materialFromProduct: MaterialFromProductDto,
+    id: ObjectId,
+    request,
+  ) {
+    let product = await mongoService.findOne(
+      this.productModel,
+      { user: request.user.id, _id: id },
+      {},
+      'material',
+    );
+
+    console.log(product);
+    return 'hello';
   }
 }
