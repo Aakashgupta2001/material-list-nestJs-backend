@@ -29,6 +29,7 @@ export class ProductService {
       this.productModel,
       { user: request.user.id },
     );
+    createProductDto['user'] = request.user.id;
 
     return await mongoService.create(this.productModel, createProductDto);
   }
