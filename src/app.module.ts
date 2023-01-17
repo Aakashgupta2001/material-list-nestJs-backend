@@ -11,6 +11,7 @@ import { RolesGuard } from './auth/guards/role/roles.guard';
 import { JwtGuard } from './auth/guards/jwt/jwt.guard';
 import { AllExceptionsFilter } from './helpers/errorHandler/all-exceptions.filter';
 import { ProductModule } from './product/product.module';
+import { OrderModule } from './order/order.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { ProductModule } from './product/product.module';
     AuthModule,
     MaterialModule,
     ProductModule,
+    OrderModule,
   ],
   controllers: [AppController],
   providers: [
