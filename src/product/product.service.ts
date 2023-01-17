@@ -1,17 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import {
-  Product,
-  productDocument,
-  ProductSchema,
-} from './schema/product.schema';
+import { Product, productDocument } from './schema/product.schema';
 import { generateRandomString } from 'src/helpers/helpers';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, ObjectId } from 'mongoose';
 import { UserDetails } from 'src/user/interfaces/userDetails.interface';
 const mongoService = require('../helpers/mongoService/mongoService');
-import { Request } from 'express';
 import { MaterialFromProductDto } from './dto/material-product.dto';
 
 @Injectable()
