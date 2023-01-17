@@ -24,7 +24,6 @@ export class Product {
         qty: Number,
       },
     ],
-    // ref: 'Material',
   })
   material: [
     {
