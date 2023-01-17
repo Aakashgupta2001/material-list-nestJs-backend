@@ -20,7 +20,7 @@ export class Product {
     required: true,
     type: [
       {
-        material: { type: [mongoose.Schema.Types.ObjectId], ref: 'Material' },
+        material: { type: mongoose.Schema.Types.ObjectId, ref: 'Material' },
         qty: Number,
       },
     ],
@@ -28,7 +28,7 @@ export class Product {
   })
   material: [
     {
-      material: { type: [mongoose.Schema.Types.ObjectId]; ref: 'Material' };
+      material: { type: mongoose.Schema.Types.ObjectId; ref: 'Material' };
       qty: Number;
     },
   ];
