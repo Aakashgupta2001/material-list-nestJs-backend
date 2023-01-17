@@ -17,12 +17,6 @@ export class Order {
   @Prop({ required: true })
   companyName: string;
 
-  @Prop({ required: true })
-  productCode: string;
-
-  @Prop({ required: true })
-  productName: string;
-
   @Prop({
     required: true,
     type: [
