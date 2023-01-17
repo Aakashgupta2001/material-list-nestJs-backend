@@ -71,10 +71,11 @@ export class ProductService {
       this.productModel,
       { user: request.user.id, _id: id },
       {},
-      'material',
+      'material.material',
     );
 
-    console.log(product);
-    return 'hello';
+    return await product.material.map((pro) => {
+      return { mat: pro.material, qty: +pro.qty * +materialFromProduct['qty'] };
+    });
   }
 }
