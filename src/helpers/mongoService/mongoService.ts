@@ -1,11 +1,11 @@
 // mongodb queires global service
 
 // create
-exports.create = async (model, body) => {
+export const create = async (model, body) => {
   return await model.create(body);
 };
 
-exports.upsert = async (model, filter, body) => {
+export const upsert = async (model, filter, body) => {
   return await model.findOneAndUpdate(
     filter,
     { $set: { ...body } },
@@ -18,7 +18,7 @@ exports.upsert = async (model, filter, body) => {
     },
   );
 };
-exports.update = async (model, filter, body) => {
+export const update = async (model, filter, body) => {
   return await model.findOneAndUpdate(
     filter,
     { $set: { ...body } },
@@ -33,7 +33,7 @@ exports.update = async (model, filter, body) => {
 };
 
 // find and filter
-exports.find = async (
+export const find = async (
   model,
   filter,
   projection = {},
@@ -49,20 +49,25 @@ exports.find = async (
     .populate(populate);
 };
 
-exports.findOne = async (model, filter, projection = {}, populate = '') => {
+export const findOne = async (
+  model,
+  filter,
+  projection = {},
+  populate = '',
+) => {
   return await model.findOne(filter, projection).populate(populate);
 };
 
-exports.countDocuments = async (model, filter) => {
+export const countDocuments = async (model, filter) => {
   return await model.countDocuments(filter);
 };
 
 // updates
-exports.findOneAndUpdate = async (model, filter, body) => {
+export const findOneAndUpdate = async (model, filter, body) => {
   return await model.findOneAndUpdate(filter, body, { new: true });
 };
 
-exports.findOneAndUpsert = async (model, filter, body) => {
+export const findOneAndUpsert = async (model, filter, body) => {
   return await model.findOneAndUpdate(filter, body, {
     new: true,
     upsert: true,
@@ -72,24 +77,24 @@ exports.findOneAndUpsert = async (model, filter, body) => {
   });
 };
 
-exports.updateMany = async (model, filter, body) => {
+export const updateMany = async (model, filter, body) => {
   return await model.updateMany(filter, body, { new: true });
 };
 
 // delete
-exports.findOneAndSoftDelete = async (model, filter, body) => {
+export const findOneAndSoftDelete = async (model, filter, body) => {
   return await model.findOneAndUpdate(filter, body, { new: true });
 };
 
-exports.findOneAndHardDelete = async (model, filter) => {
+export const findOneAndHardDelete = async (model, filter) => {
   return await model.findOneAndDelete(filter);
 };
 
-exports.deleteMany = async (model, filter) => {
+export const deleteMany = async (model, filter) => {
   return await model.deleteMany(filter);
 };
 
 // aggregation
-exports.aggregate = async (model, query) => {
+export const aggregate = async (model, query) => {
   return await model.aggregate(query);
 };

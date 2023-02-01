@@ -6,7 +6,7 @@ import { generateRandomString } from 'src/helpers/helpers';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, ObjectId } from 'mongoose';
 import { UserDetails } from 'src/user/interfaces/userDetails.interface';
-const mongoService = require('../helpers/mongoService/mongoService');
+import * as mongoService from '../helpers/mongoService/mongoService';
 import { MaterialFromProductDto } from './dto/material-product.dto';
 
 @Injectable()

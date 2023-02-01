@@ -7,21 +7,21 @@ import { CreateMaterialDto } from './dto/create-material.dto';
 import { UpdateMaterialDto } from './dto/update-material.dto';
 import { MaterialDocument, Material } from './schema/material.schema';
 import { generateRandomString } from '../helpers/helpers';
+import * as mongoService from '../helpers/mongoService/mongoService';
 
-const mongoService = require('../helpers/mongoService/mongoService');
 @Injectable()
 export class MaterialService {
   constructor(
     @InjectModel(Material.name) private materialModel: Model<MaterialDocument>,
   ) {}
 
-  async create(createMaterialDto: CreateMaterialDto, request) {
+  async create(createMaterialDto: CreateMaterialDto, req) {
     createMaterialDto['uid'] = await generateRandomString(
       'Mat',
       this.materialModel,
-      { user: request.user.id },
+      { user: req.user.id },
     );
-    createMaterialDto['user'] = request.user.id;
+    createMaterialDto['user'] = req.user.id;
     return await mongoService.create(this.materialModel, createMaterialDto);
   }
 
@@ -48,9 +48,9 @@ export class MaterialService {
     );
   }
 
-  async remove(id: ObjectId, request) {
+  async remove(id: ObjectId, req) {
     return await mongoService.findOneAndHardDelete(this.materialModel, {
-      user: request.user.id,
+      user: req.user.id,
       _id: id,
     });
   }
