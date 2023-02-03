@@ -32,47 +32,65 @@ export class OrderService {
       user: req.user.id,
       _id: id,
     });
-    let materials = await this.getMaterialListFromOrder(products.product);
-    products['materials'] = materials;
-    return await mongoService.findOne(this.orderModel, {
-      user: req.user.id,
-      _id: id,
-    });
+    let materials = await this.getMaterialListFromOrder(products?.product);
+
+    return await materials;
   }
 
   async getMaterialListFromOrder(productArray: CreateOrderDto['product']) {
     let query = [
+      {
+        $unwind: '$product',
+      },
       {
         //Extracting Products
         $lookup: {
           from: 'products',
           localField: 'product.product',
           foreignField: '_id',
-          as: 'productDetails.products',
+          as: 'product.product',
         },
       },
       {
-        $unwind: {
-          path: '$product.product',
-          preserveNullAndEmptyArrays: true,
+        $unwind: '$product.product',
+      },
+      {
+        $unwind: '$product.product.material',
+      },
+      {
+        $lookup: {
+          from: 'materials',
+          localField: 'product.product.material.material',
+          foreignField: '_id',
+          as: 'product.product.material.material',
         },
       },
+
+      {
+        $group: {
+          _id: '$_id',
+          product: { $push: '$product' },
+          uid: { $first: '$uid' },
+          date: { $first: '$date' },
+          workOrderNo: { $first: '$workOrderNo' },
+          companyName: { $first: '$companyName' },
+        },
+      },
+
       // {
-      //   //Extracting Materials
-      //   $lookup: {
-      //     from: 'materials',
-      //     localField: 'productDetails.products.material.material',
-      //     foreignField: '_id',
-      //     as: 'materialDetails',
+      //   $group: {
+      //     _id: '$_id',
+      //     product: { $push: '$product' },
+      //     uid: { $first: '$uid' },
+      //     date: { $first: '$date' },
+      //     workOrderNo: { $first: '$workOrderNo' },
+      //     companyName: { $first: '$companyName' },
       //   },
       // },
     ];
+
     let ans = await mongoService.aggregate(this.orderModel, query);
-    // console.log('PRODUCT_LIST = ', ans[0]);
-    console.log(
-      'PRODUCT_LIST = ',
-      util.inspect(ans, false, null, true /* enable colors */),
-    );
+    return ans;
   }
 
   async update(id: ObjectId, updateOrderDto: UpdateOrderDto, req) {
