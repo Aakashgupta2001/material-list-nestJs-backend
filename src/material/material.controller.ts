@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Req,
+  Query,
 } from '@nestjs/common';
 import { MaterialService } from './material.service';
 import { CreateMaterialDto } from './dto/create-material.dto';
@@ -27,7 +28,7 @@ export class MaterialController {
   }
 
   @Get()
-  findAll(@Req() request: Request, @Param('search') search: ObjectId) {
+  findAll(@Req() request: Request, @Query('search') search: ObjectId) {
     return this.materialService.findAll(request, search);
   }
 

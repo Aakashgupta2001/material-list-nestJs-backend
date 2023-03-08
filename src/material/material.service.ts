@@ -28,20 +28,20 @@ export class MaterialService {
   async findAll(req, search) {
     let filter = {};
     filter['user'] = req.user.id;
+    console.log(search);
     if (search) {
       filter = {
         ...filter,
         $or: [
-          { name: { $regex: search, $options: 'i' } },
-          { uid: { $regex: search, $options: 'i' } },
-          { matCode: { $regex: search, $options: 'i' } },
-          { rackNo: { $regex: search, $options: 'i' } },
+          { name: { $regex: `${search}`, $options: 'i' } },
+          // { uid: { $regex: search, $options: 'i' } },
+          // { matCode: { $regex: search, $options: 'i' } },
+          // { rackNo: { $regex: search, $options: 'i' } },
         ],
       };
     }
-    return await mongoService.find(this.materialModel, {
-      filter,
-    });
+    console.log(filter);
+    return await mongoService.find(this.materialModel, filter);
   }
 
   async findOne(id: ObjectId, req) {
