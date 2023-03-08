@@ -35,7 +35,7 @@ export class ProductService {
     if (search) {
       filter = {
         ...filter,
-        $or: [{ name: { $regex: `${search}`, $options: 'i' } }],
+        $or: [{ productName: { $regex: `${search}`, $options: 'i' } }],
       };
     }
 
