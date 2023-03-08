@@ -29,10 +29,17 @@ export class ProductService {
     return await mongoService.create(this.productModel, createProductDto);
   }
 
-  async findAll(request) {
-    return await mongoService.find(this.productModel, {
-      user: request.user.id,
-    });
+  async findAll(request, search) {
+    let filter = {};
+    filter['user'] = request.user.id;
+    if (search) {
+      filter = {
+        ...filter,
+        $or: [{ name: { $regex: `${search}`, $options: 'i' } }],
+      };
+    }
+
+    return await mongoService.find(this.productModel, filter);
   }
 
   async findOne(id: ObjectId, request) {

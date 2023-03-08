@@ -11,7 +11,7 @@ import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { MaterialFromProductDto } from './dto/material-product.dto';
-import { Req } from '@nestjs/common/decorators';
+import { Query, Req } from '@nestjs/common/decorators';
 import { Request } from 'express';
 import { ObjectId } from 'mongoose';
 
@@ -25,8 +25,8 @@ export class ProductController {
   }
 
   @Get()
-  findAll(@Req() request: Request) {
-    return this.productService.findAll(request);
+  findAll(@Req() request: Request, @Query('search') search: ObjectId) {
+    return this.productService.findAll(request, search);
   }
 
   @Get(':id')
