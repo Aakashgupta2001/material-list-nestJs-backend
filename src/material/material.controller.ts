@@ -27,8 +27,8 @@ export class MaterialController {
   }
 
   @Get()
-  findAll(@Req() request: Request) {
-    return this.materialService.findAll(request);
+  findAll(@Req() request: Request, @Param('search') search: ObjectId) {
+    return this.materialService.findAll(request, search);
   }
 
   @Get(':id')

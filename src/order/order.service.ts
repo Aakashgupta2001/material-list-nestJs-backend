@@ -65,7 +65,16 @@ export class OrderService {
           as: 'product.product.material.material',
         },
       },
-
+      {
+        $group: {
+          _id: '$product.product._id',
+          product: { $push: '$product' },
+          uid: { $first: '$uid' },
+          productCode: { $first: '$productCode' },
+          productName: { $first: '$productName' },
+          material: { $first: '$material' },
+        },
+      },
       {
         $group: {
           _id: '$_id',

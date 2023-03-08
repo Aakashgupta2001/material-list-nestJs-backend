@@ -25,9 +25,22 @@ export class MaterialService {
     return await mongoService.create(this.materialModel, createMaterialDto);
   }
 
-  async findAll(req) {
+  async findAll(req, search) {
+    let filter = {};
+    filter['user'] = req.user.id;
+    if (search) {
+      filter = {
+        ...filter,
+        $or: [
+          { name: { $regex: search, $options: 'i' } },
+          { uid: { $regex: search, $options: 'i' } },
+          { matCode: { $regex: search, $options: 'i' } },
+          { rackNo: { $regex: search, $options: 'i' } },
+        ],
+      };
+    }
     return await mongoService.find(this.materialModel, {
-      user: req.user.id,
+      filter,
     });
   }
 
