@@ -34,9 +34,9 @@ export class MaterialService {
         ...filter,
         $or: [
           { name: { $regex: `${search}`, $options: 'i' } },
-          // { uid: { $regex: search, $options: 'i' } },
-          // { matCode: { $regex: search, $options: 'i' } },
-          // { rackNo: { $regex: search, $options: 'i' } },
+          { uid: { $regex: search, $options: 'i' } },
+          { matCode: { $regex: search, $options: 'i' } },
+          { rackNo: { $regex: search, $options: 'i' } },
         ],
       };
     }
