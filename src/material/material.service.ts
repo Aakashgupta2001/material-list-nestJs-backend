@@ -25,10 +25,10 @@ export class MaterialService {
     return await mongoService.create(this.materialModel, createMaterialDto);
   }
 
-  async findAll(req, search) {
+  async findAll(req, search, type) {
     let filter = {};
     filter['user'] = req.user.id;
-    console.log(search);
+    if (type) filter['materialType'] = type;
     if (search) {
       filter = {
         ...filter,

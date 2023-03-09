@@ -28,8 +28,12 @@ export class MaterialController {
   }
 
   @Get()
-  findAll(@Req() request: Request, @Query('search') search: ObjectId) {
-    return this.materialService.findAll(request, search);
+  findAll(
+    @Req() request: Request,
+    @Query('search') search: ObjectId,
+    @Query('type') type: String,
+  ) {
+    return this.materialService.findAll(request, search, type);
   }
 
   @Get(':id')
