@@ -17,6 +17,8 @@ const genUid = async (prefix, model, filter, modelCount) => {
     .limit(1)
     // .filter(filter)
     .sort({ $natural: -1 });
-  if (lastEntry) result = `${prefix}-${+lastEntry[0].uid.split('-')[1] + 1}`;
+  console.log(lastEntry);
+  if (lastEntry.length !== 0)
+    result = `${prefix}-${+lastEntry[0].uid.split('-')[1] + 1}`;
   return result;
 };
