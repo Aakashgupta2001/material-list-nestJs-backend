@@ -47,6 +47,11 @@ export class OrderService {
         },
       },
       {
+        $match: {
+          $expr: { $eq: ['$user', { $toObjectId: user }] },
+        },
+      },
+      {
         $unwind: '$product',
       },
       {
@@ -75,22 +80,44 @@ export class OrderService {
       },
       {
         $group: {
-          _id: '$_id',
+          _id: {
+            product: '$_id.product',
+            material: '$product.product.material._id',
+          },
           uid: { $first: '$uid' },
           date: { $first: '$date' },
           workOrderNo: { $first: '$workOrderNo' },
           companyName: { $first: '$companyName' },
+          qty: { $first: '$qty' },
           product: { $push: '$product' },
         },
       },
       {
         $group: {
           _id: '$product.product._id',
-          product: { $push: '$product' },
           uid: { $first: '$uid' },
-          productCode: { $first: '$productCode' },
-          productName: { $first: '$productName' },
-          material: { $first: '$material' },
+          date: { $first: '$date' },
+          workOrderNo: { $first: '$workOrderNo' },
+          companyName: { $first: '$companyName' },
+          qty: { $first: '$product.qty' },
+          productDet: { $first: '$product.product' },
+          materialDet: { $push: { $first: '$product.product.material' } },
+        },
+      },
+      {
+        $group: {
+          _id: '$uid',
+
+          date: { $first: '$date' },
+          workOrderNo: { $first: '$workOrderNo' },
+          companyName: { $first: '$companyName' },
+          product: {
+            $push: {
+              qty: '$qty',
+              productDet: '$productDet',
+              materialDet: '$materialDet',
+            },
+          },
         },
       },
     ];
