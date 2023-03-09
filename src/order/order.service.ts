@@ -19,6 +19,7 @@ export class OrderService {
     createOrderDto['uid'] = await generateRandomString('Ord', this.orderModel, {
       user: req.user.id,
     });
+    createOrderDto['user'] = req.user.id;
 
     return await mongoService.create(this.orderModel, createOrderDto);
   }
@@ -32,13 +33,19 @@ export class OrderService {
       user: req.user.id,
       _id: id,
     });
-    let materials = await this.getMaterialListFromOrder(products?.product);
+    let materials = await this.getMaterialListFromOrder(id, req.user.id);
 
     return await materials;
   }
 
-  async getMaterialListFromOrder(productArray: CreateOrderDto['product']) {
+  async getMaterialListFromOrder(id: ObjectId, user: ObjectId) {
+    console.log(id);
     let query = [
+      {
+        $match: {
+          $expr: { $eq: ['$_id', { $toObjectId: id }] },
+        },
+      },
       {
         $unwind: '$product',
       },
@@ -54,6 +61,7 @@ export class OrderService {
       {
         $unwind: '$product.product',
       },
+
       {
         $unwind: '$product.product.material',
       },
@@ -67,6 +75,16 @@ export class OrderService {
       },
       {
         $group: {
+          _id: '$_id',
+          uid: { $first: '$uid' },
+          date: { $first: '$date' },
+          workOrderNo: { $first: '$workOrderNo' },
+          companyName: { $first: '$companyName' },
+          product: { $push: '$product' },
+        },
+      },
+      {
+        $group: {
           _id: '$product.product._id',
           product: { $push: '$product' },
           uid: { $first: '$uid' },
@@ -75,29 +93,8 @@ export class OrderService {
           material: { $first: '$material' },
         },
       },
-      {
-        $group: {
-          _id: '$_id',
-          product: { $push: '$product' },
-          uid: { $first: '$uid' },
-          date: { $first: '$date' },
-          workOrderNo: { $first: '$workOrderNo' },
-          companyName: { $first: '$companyName' },
-        },
-      },
-
-      // {
-      //   $group: {
-      //     _id: '$_id',
-      //     product: { $push: '$product' },
-      //     uid: { $first: '$uid' },
-      //     date: { $first: '$date' },
-      //     workOrderNo: { $first: '$workOrderNo' },
-      //     companyName: { $first: '$companyName' },
-      //   },
-      // },
     ];
-
+    console.log(query);
     let ans = await mongoService.aggregate(this.orderModel, query);
     return ans;
   }

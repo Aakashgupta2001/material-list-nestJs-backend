@@ -1,4 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { User, UserSchema } from 'src/user/schemas/user.schema';
+
 import mongoose from 'mongoose';
 
 export type orderDocument = Order & Document;
@@ -32,6 +34,9 @@ export class Order {
       qty: Number;
     },
   ];
+
+  @Prop({ required: true, type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+  user: User;
 
   @Prop({ default: true })
   active: boolean;
