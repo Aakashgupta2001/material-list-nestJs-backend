@@ -24,8 +24,20 @@ export class OrderService {
     return await mongoService.create(this.orderModel, createOrderDto);
   }
 
-  async findAll(req) {
-    return await mongoService.find(this.orderModel, { user: req.user.id });
+  async findAll(request, search) {
+    let filter = {};
+    filter['user'] = request.user.id;
+    if (search) {
+      filter = {
+        ...filter,
+        $or: [
+          { uid: { $regex: `${search}`, $options: 'i' } },
+          { companyName: { $regex: `${search}`, $options: 'i' } },
+          { workOrderNo: { $regex: `${search}`, $options: 'i' } },
+        ],
+      };
+    }
+    return await mongoService.find(this.orderModel, filter);
   }
 
   async findOne(id: ObjectId, req) {
