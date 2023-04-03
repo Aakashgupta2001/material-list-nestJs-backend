@@ -64,7 +64,10 @@ export class OrderService {
         },
       },
       {
-        $unwind: '$product',
+        $unwind: {
+          path: '$product',
+          preserveNullAndEmptyArrays: true,
+        },
       },
       {
         //Extracting Products
@@ -76,11 +79,16 @@ export class OrderService {
         },
       },
       {
-        $unwind: '$product.product',
+        $unwind: {
+          path: '$product.product',
+          preserveNullAndEmptyArrays: true,
+        },
       },
-
       {
-        $unwind: '$product.product.material',
+        $unwind: {
+          path: '$product.product.material',
+          preserveNullAndEmptyArrays: true,
+        },
       },
       {
         $lookup: {
@@ -91,46 +99,216 @@ export class OrderService {
         },
       },
       {
+        $unwind: {
+          path: '$product.product.material.material',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
         $group: {
-          _id: {
-            product: '$_id.product',
-            material: '$product.product.material._id',
+          _id: '$_id',
+          uid: {
+            $first: '$uid',
           },
-          uid: { $first: '$uid' },
-          date: { $first: '$date' },
-          workOrderNo: { $first: '$workOrderNo' },
-          companyName: { $first: '$companyName' },
-          qty: { $first: '$qty' },
-          product: { $push: '$product' },
-        },
-      },
-      {
-        $group: {
-          _id: '$product.product._id',
-          uid: { $first: '$uid' },
-          date: { $first: '$date' },
-          workOrderNo: { $first: '$workOrderNo' },
-          companyName: { $first: '$companyName' },
-          qty: { $first: '$product.qty' },
-          productDet: { $first: '$product.product' },
-          materialDet: { $push: { $first: '$product.product.material' } },
-        },
-      },
-      {
-        $group: {
-          _id: '$uid',
-
-          date: { $first: '$date' },
-          workOrderNo: { $first: '$workOrderNo' },
-          companyName: { $first: '$companyName' },
+          date: {
+            $first: '$date',
+          },
+          workOrderNo: {
+            $first: '$workOrderNo',
+          },
+          companyName: {
+            $first: '$companyName',
+          },
           product: {
             $push: {
-              qty: '$qty',
-              productDet: '$productDet',
-              materialDet: '$materialDet',
+              material: '$product.product.material',
+              uid: '$product.product.uid',
+              productCode: '$product.product.productCode',
+              productName: '$product.product.productName',
+              user: '$product.product.user',
+              qty: '$product.qty',
+              _id: '$product.product._id',
             },
           },
         },
+      },
+      {
+        $unwind: {
+          path: '$product',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $group: {
+          _id: {
+            _id: '$_id',
+            product: '$product._id',
+          },
+          uid: {
+            $first: '$uid',
+          },
+          date: {
+            $first: '$date',
+          },
+          workOrderNo: {
+            $first: '$workOrderNo',
+          },
+          companyName: {
+            $first: '$companyName',
+          },
+          product: {
+            $push: {
+              uid: '$product.uid',
+              productCode: '$product.productCode',
+              productName: '$product.productName',
+              user: '$product.user',
+              qty: '$product.qty',
+              _id: '$product._id',
+              material: '$product.material',
+            },
+          },
+        },
+      },
+      {
+        $group: {
+          _id: {
+            _id: '$_id',
+            product: '$product._id',
+          },
+          uid: {
+            $first: '$uid',
+          },
+          date: {
+            $first: '$date',
+          },
+          workOrderNo: {
+            $first: '$workOrderNo',
+          },
+          companyName: {
+            $first: '$companyName',
+          },
+          productDet: {
+            $push: {
+              // product: "$product",
+              uid: {
+                $first: '$product.uid',
+              },
+              productCode: {
+                $first: '$product.productCode',
+              },
+              productName: {
+                $first: '$product.productName',
+              },
+              user: {
+                $first: '$product.user',
+              },
+              qty: {
+                $first: '$product.qty',
+              },
+              _id: {
+                $first: '$product._id',
+              },
+            },
+          },
+          materialDet: {
+            $push: {
+              material: '$product.material',
+              // qty: "$product.material.qty",
+              //  _id: "$product.material.material._id",
+              // 	name: "$product.material.material.name",
+              // description: "$product.material.material.description",
+              // uid: "$product.material.material.uid",
+              // matCode: "$product.material.material.matCode",
+              // rackNo: "$product.material.material.rackNo",
+              // hsn: "$product.material.material.hsn",
+              // igst: "$product.material.material.igst",
+              // sgst: "$product.material.material.sgst",
+              // remark: "$product.material.material.remark",
+              // rate : "$product.material.material.rate",
+              // materialType: "$product.material.material.materialType",
+            },
+          },
+        },
+      },
+      {
+        $unwind: {
+          path: '$materialDet',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $group: {
+          _id: {
+            _id: '$_id._id',
+            product: '$product._id',
+          },
+          uid: {
+            $first: '$uid',
+          },
+          date: {
+            $first: '$date',
+          },
+          workOrderNo: {
+            $first: '$workOrderNo',
+          },
+          companyName: {
+            $first: '$companyName',
+          },
+          product: {
+            $push: {
+              material: '$materialDet.material',
+              uid: {
+                $first: '$productDet.uid',
+              },
+              productCode: {
+                $first: '$productDet.productCode',
+              },
+              productName: {
+                $first: '$productDet.productName',
+              },
+              user: {
+                $first: '$productDet.user',
+              },
+              qty: {
+                $first: '$productDet.qty',
+              },
+              _id: {
+                $first: '$productDet._id',
+              },
+            },
+          },
+        },
+      },
+      {
+        $unwind: {
+          path: '$product',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $group:
+          /**
+           * _id: The id of the group.
+           * fieldN: The first field name.
+           */
+          {
+            _id: '$_id._id._id',
+            uid: {
+              $first: '$uid',
+            },
+            date: {
+              $first: '$date',
+            },
+            workOrderNo: {
+              $first: '$workOrderNo',
+            },
+            companyName: {
+              $first: '$companyName',
+            },
+            product: {
+              $push: '$product',
+            },
+          },
       },
     ];
     console.log(query);
