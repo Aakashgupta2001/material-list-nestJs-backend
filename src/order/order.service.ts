@@ -26,7 +26,7 @@ export class OrderService {
 
   async findAll(request, search) {
     let filter = {};
-    filter['user'] = request.user.id;
+    filter['user'] = request.user._id;
     if (search) {
       filter = {
         ...filter,

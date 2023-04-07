@@ -22,16 +22,16 @@ export class ProductService {
     createProductDto['uid'] = await generateRandomString(
       'pro',
       this.productModel,
-      { user: request.user.id },
+      { user: request.user._id },
     );
-    createProductDto['user'] = request.user.id;
+    createProductDto['user'] = request.user._id;
 
     return await mongoService.create(this.productModel, createProductDto);
   }
 
   async findAll(request, search) {
     let filter = {};
-    filter['user'] = request.user.id;
+    filter['user'] = request.user._id;
     if (search) {
       filter = {
         ...filter,
@@ -44,7 +44,7 @@ export class ProductService {
 
   async findOne(id: ObjectId, request) {
     return await mongoService.findOne(this.productModel, {
-      user: request.user.id,
+      user: request.user._id,
       _id: id,
     });
   }
@@ -52,14 +52,14 @@ export class ProductService {
   async update(id: ObjectId, updateProductDto: UpdateProductDto, request) {
     return await mongoService.update(
       this.productModel,
-      { user: request.user.id, _id: id },
+      { user: request.user._id, _id: id },
       { ...updateProductDto },
     );
   }
 
   async remove(id: ObjectId, request) {
     return await mongoService.findOneAndHardDelete(this.productModel, {
-      user: request.user.id,
+      user: request.user._id,
       _id: id,
     });
   }
@@ -71,7 +71,7 @@ export class ProductService {
   ) {
     let product = await mongoService.findOne(
       this.productModel,
-      { user: request.user.id, _id: id },
+      { user: request.user._id, _id: id },
       {},
       'material.material',
     );
