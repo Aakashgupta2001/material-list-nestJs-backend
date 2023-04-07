@@ -8,7 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { MaterialModule } from './material/material.module';
 import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './auth/guards/role/roles.guard';
-import { JwtGuard } from './auth/guards/jwt/jwt.guard';
+import { AuthGuard } from './auth/guards/jwt/jwt.guard';
 import { AllExceptionsFilter } from './helpers/errorHandler/all-exceptions.filter';
 import { ProductModule } from './product/product.module';
 import { OrderModule } from './order/order.module';
@@ -37,7 +37,7 @@ import { OrderModule } from './order/order.module';
     AppService,
     {
       provide: APP_GUARD,
-      useClass: JwtGuard,
+      useClass: AuthGuard,
     },
     {
       provide: APP_FILTER,

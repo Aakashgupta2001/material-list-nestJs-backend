@@ -16,18 +16,20 @@ export class MaterialService {
   ) {}
 
   async create(createMaterialDto: CreateMaterialDto, req) {
+    console.log(req.user);
     createMaterialDto['uid'] = await generateRandomString(
       'Mat',
       this.materialModel,
-      { user: req.user.id },
+      { user: req.user._id },
     );
-    createMaterialDto['user'] = req.user.id;
+    createMaterialDto['user'] = req.user._id;
     return await mongoService.create(this.materialModel, createMaterialDto);
   }
 
   async findAll(req, search, type) {
     let filter = {};
-    filter['user'] = req.user.id;
+    filter['user'] = req.user._id;
+    console.log('filter', req.user);
     if (type) filter['materialType'] = type;
     if (search) {
       filter = {
@@ -46,7 +48,7 @@ export class MaterialService {
 
   async findOne(id: ObjectId, req) {
     return await mongoService.findOne(this.materialModel, {
-      user: req.user.id,
+      user: req.user._id,
       _id: id,
     });
   }
@@ -54,7 +56,7 @@ export class MaterialService {
   async update(id: ObjectId, updateMaterialDto: UpdateMaterialDto, req) {
     return await mongoService.update(
       this.materialModel,
-      { user: req.user.id, _id: id },
+      { user: req.user._id, _id: id },
       {
         ...updateMaterialDto,
       },
@@ -63,7 +65,7 @@ export class MaterialService {
 
   async remove(id: ObjectId, req) {
     return await mongoService.findOneAndHardDelete(this.materialModel, {
-      user: req.user.id,
+      user: req.user._id,
       _id: id,
     });
   }

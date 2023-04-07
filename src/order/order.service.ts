@@ -17,9 +17,9 @@ export class OrderService {
 
   async create(createOrderDto: CreateOrderDto, req) {
     createOrderDto['uid'] = await generateRandomString('Ord', this.orderModel, {
-      user: req.user.id,
+      user: req.user._id,
     });
-    createOrderDto['user'] = req.user.id;
+    createOrderDto['user'] = req.user._id;
 
     return await mongoService.create(this.orderModel, createOrderDto);
   }
@@ -42,10 +42,10 @@ export class OrderService {
 
   async findOne(id: ObjectId, req) {
     let products = await mongoService.findOne(this.orderModel, {
-      user: req.user.id,
+      user: req.user._id,
       _id: id,
     });
-    let materials = await this.getMaterialListFromOrder(id, req.user.id);
+    let materials = await this.getMaterialListFromOrder(id, req.user._id);
 
     return await materials;
   }
@@ -319,14 +319,14 @@ export class OrderService {
   async update(id: ObjectId, updateOrderDto: UpdateOrderDto, req) {
     return await mongoService.update(
       this.orderModel,
-      { user: req.user.id, _id: id },
+      { user: req.user._id, _id: id },
       { ...updateOrderDto },
     );
   }
 
   async remove(id: ObjectId, req) {
     return await mongoService.findOneAndHardDelete(this.orderModel, {
-      user: req.user.id,
+      user: req.user._id,
       _id: id,
     });
   }

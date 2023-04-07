@@ -12,7 +12,6 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDetails } from './interfaces/userDetails.interface';
-import { JwtGuard } from 'src/auth/guards/jwt/jwt.guard';
 import { Roles } from 'src/auth/guards/role/roles.decorator';
 import { Role } from './schemas/role.enum';
 import { RolesGuard } from 'src/auth/guards/role/roles.guard';
