@@ -12,6 +12,7 @@ import { AuthGuard } from './auth/guards/jwt/jwt.guard';
 import { AllExceptionsFilter } from './helpers/errorHandler/all-exceptions.filter';
 import { ProductModule } from './product/product.module';
 import { OrderModule } from './order/order.module';
+import { DownloadModule } from './pdfDownloads/downloads.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { OrderModule } from './order/order.module';
     MaterialModule,
     ProductModule,
     OrderModule,
+    DownloadModule,
   ],
   controllers: [AppController],
   providers: [

@@ -41,17 +41,16 @@ export class OrderService {
   }
 
   async findOne(id: ObjectId, req) {
-    let products = await mongoService.findOne(this.orderModel, {
-      user: req.user._id,
-      _id: id,
-    });
+    // let products = await mongoService.findOne(this.orderModel, {
+    //   user: req.user._id,
+    //   _id: id,
+    // });
     let materials = await this.getMaterialListFromOrder(id, req.user._id);
 
     return await materials;
   }
 
   async getMaterialListFromOrder(id: ObjectId, user: ObjectId) {
-    console.log(id);
     let query = [
       {
         $match: {
@@ -311,7 +310,7 @@ export class OrderService {
           },
       },
     ];
-    console.log(query);
+
     let ans = await mongoService.aggregate(this.orderModel, query);
     return ans;
   }
