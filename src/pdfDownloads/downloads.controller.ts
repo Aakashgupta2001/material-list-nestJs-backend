@@ -28,13 +28,14 @@ export class DownloadController {
 
   @Get(':id')
   @HttpCode(200)
+  // @Header('Content-Type', 'application/pdf')
   async findOne(
     @Param('id') id: ObjectId,
     @Query('name') name: string,
+
     @Req() req: Request,
   ) {
     const pdfFile = await this.downloadService.downloadPdf(req, id, name);
-
     return new StreamableFile(pdfFile);
   }
 
