@@ -38,6 +38,7 @@ export class ProductService {
         $or: [
           { productName: { $regex: `${search}`, $options: 'i' } },
           { productCode: { $regex: `${search}`, $options: 'i' } },
+          { uid: { $regex: `${search}`, $options: 'i' } },
         ],
       };
     }
