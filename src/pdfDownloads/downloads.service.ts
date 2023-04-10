@@ -8,6 +8,7 @@ import { HttpException } from '@nestjs/common';
 const fsPromise = promisify(fs.readFile);
 
 import { OrderService } from '../order/order.service';
+import { ProductService } from '../product/product.service';
 
 import hbs from 'handlebars';
 import HTMLToPDF from 'convert-html-to-pdf/lib/models/HTMLToPDF';
@@ -33,7 +34,10 @@ hbs.registerHelper('sum', function (numberOne, numberTwo) {
 
 @Injectable()
 export class DownloadService {
-  constructor(private readonly OrderService: OrderService) {}
+  constructor(
+    private readonly OrderService: OrderService,
+    private readonly ProductService: ProductService,
+  ) {}
 
   async downloadPdf(req, id, name) {
     const user = req.user._id;
@@ -47,16 +51,14 @@ export class DownloadService {
       data = data[0];
     }
     if (name == 'productList') {
-      templateName = 'test';
+      templateName = 'productList';
 
-      data = await this.OrderService.getMaterialListFromOrder(id, user);
-      data = data[0];
+      data = await this.ProductService.findAll(req, '');
     }
     if (name == 'product') {
-      templateName = 'test';
+      templateName = 'product';
 
-      data = await this.OrderService.getMaterialListFromOrder(id, user);
-      data = data[0];
+      data = await this.ProductService.findOne(id, req);
     }
 
     if (templateName == '') throw new HttpException('Pdf Not Found', 401);
