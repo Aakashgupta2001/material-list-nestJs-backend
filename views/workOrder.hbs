@@ -1,11 +1,49 @@
+<style>
+  body { font-family: Arial, sans-serif; font-size: 14px; padding: 50px; } h1 {
+  font-size: 24px; font-weight: bold; margin-bottom: 20px; } h2 { font-size:
+  20px; margin-bottom: 20px; } table { width: 100%; border-collapse: collapse;
+  margin-bottom: 20px; } th, td { padding: 10px; text-align: left;
+  vertical-align: middle; border: 1px solid #ccc; } th { font-weight: bold; } ol
+  { margin: 0px 20px; padding: 0; } li { margin-bottom: 5px; } h3 {
+  margin-bottom: 10px; }
+</style>
+
 <html>
   <head>
     <meta charset='utf-8' />
     <title>{{data.companyName}}</title>
   </head>
   <body>
-    {{data.workOrderNo}}
-    {{data.uid}}
+    <h1>Work Order No: {{data.workOrderNo}}</h1>
+    <h2>Company Name: {{data.companyName}}</h2>
+
+    <ol>
+      {{#each data.product}}
+        <li>
+          <h3>Product Code: {{productCode}}</h3>
+          <h3>Product Name: {{productName}}</h3>
+          <h3>Quantity: {{qty}}</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Material Name</th>
+                <th>Description</th>
+                <th>Quantity</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each material}}
+                <tr>
+                  <td>{{material.name}}</td>
+                  <td>{{material.description}}</td>
+                  <td>{{qty}}</td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </li>
+      {{/each}}
+    </ol>
 
   </body>
 </html>
