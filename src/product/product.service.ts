@@ -29,7 +29,7 @@ export class ProductService {
     return await mongoService.create(this.productModel, createProductDto);
   }
 
-  async findAll(request, search, skipActive = false) {
+  async findAll(request, search, skipActive = true) {
     let filter = {};
     if (!skipActive) filter['active'] = false;
     filter['user'] = request.user._id;
