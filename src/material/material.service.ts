@@ -28,6 +28,7 @@ export class MaterialService {
 
   async findAll(req, search, type) {
     let filter = {};
+    filter['active'] = true;
     filter['user'] = req.user._id;
     console.log('filter', req.user);
     if (type) filter['materialType'] = type;
@@ -64,7 +65,7 @@ export class MaterialService {
   }
 
   async remove(id: ObjectId, req) {
-    return await mongoService.findOneAndHardDelete(this.materialModel, {
+    return await mongoService.findOneAndSoftDelete(this.materialModel, {
       user: req.user._id,
       _id: id,
     });

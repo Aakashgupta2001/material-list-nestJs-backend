@@ -83,8 +83,8 @@ export const updateMany = async (model, filter, body) => {
 };
 
 // delete
-export const findOneAndSoftDelete = async (model, filter, body) => {
-  return await model.findOneAndUpdate(filter, body, { new: true });
+export const findOneAndSoftDelete = async (model, filter) => {
+  return await model.findOneAndUpdate(filter, { active: false }, { new: true });
 };
 
 export const findOneAndHardDelete = async (model, filter) => {

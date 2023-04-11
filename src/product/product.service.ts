@@ -29,8 +29,9 @@ export class ProductService {
     return await mongoService.create(this.productModel, createProductDto);
   }
 
-  async findAll(request, search) {
+  async findAll(request, search, skipActive = false) {
     let filter = {};
+    if (!skipActive) filter['active'] = false;
     filter['user'] = request.user._id;
     if (search) {
       filter = {
@@ -62,7 +63,7 @@ export class ProductService {
   }
 
   async remove(id: ObjectId, request) {
-    return await mongoService.findOneAndHardDelete(this.productModel, {
+    return await mongoService.findOneAndSoftDelete(this.productModel, {
       user: request.user._id,
       _id: id,
     });
