@@ -43,7 +43,7 @@ export class DownloadService {
     const user = req.user._id;
     console.log(name);
     let templateName = '';
-    let data;
+    let data:any;
     if (name == 'workOrder') {
       templateName = 'workOrder';
 
