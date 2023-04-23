@@ -1,0 +1,41 @@
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Work Order No: {{data.uid}}</h1>
+    <h2>Company Name: {{data.companyName}}</h2>
+
+    <ol>
+      {{#each data.product}}
+        <li>
+          <h3>Product Code: {{productCode}}</h3>
+          <h3>Product Name: {{productName}}</h3>
+          <h3>Quantity: {{qty}}</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Material Name</th>
+                <th>Description</th>
+                <th>Quantity</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each material}}
+                <tr>
+                  <td>{{material.name}}</td>
+                  <td>{{material.description}}</td>
+                  <td>{{qty}}</td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </li>
+      {{/each}}
+    </ol>
+
+  </body>
+</html>

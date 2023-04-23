@@ -1,11 +1,26 @@
 <style>
   body { font-family: Arial, sans-serif; font-size: 14px; padding: 50px; } h1 {
-  font-size: 24px; font-weight: bold; margin-bottom: 20px; } h2 { font-size:
-  20px; margin-bottom: 20px; } table { width: 100%; border-collapse: collapse;
-  margin-bottom: 20px; } th, td { padding: 10px; text-align: left;
+  font-size: 24px; font-weight: bold;} h2 { font-size: 20px;} body ol li
+  .table-main { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+  body .table-title { width: 100%; display: flex; justify-content:
+  space-between; margin-top: 20px; } th, td { padding: 10px; text-align: left;
   vertical-align: middle; border: 1px solid #ccc; } th { font-weight: bold; } ol
   { margin: 0px 20px; padding: 0; } li { margin-bottom: 5px; } h3 {
-  margin-bottom: 10px; }
+  margin-bottom: 10px; } header img {
+    max-width: 150px;
+  } header, footer {
+    width: 100%;
+    display: flex;
+  } .header-col, .footer-col { 
+    flex: 1;
+  } footer {
+    background-color: black;
+    color: white;
+  } .footer-col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 </style>
 
 <html>
@@ -13,17 +28,32 @@
     <meta charset='utf-8' />
     <title>{{data.companyName}}</title>
   </head>
+  <header>
+    <div class="header-col">
+      <img class="logo" src="../assets/logo.png" alt="Logo" />
+    </div>
+    <div class="header-col">
+      <h3>Steam Airetric Controls</h3>
+      <i>MIMIC PRODUCTS</i>
+      <p>mimicproducts.in <br>sales@mimicproducts.in</p>
+    </div>
+    <div class="header-col">
+      <p>GST: 27AAPFS8191P1Z0</p>
+      <p><strong>Company Address:</strong> <br>Steam Airetric Controls <br> A-34, Additional Ambernath MIDC, <br>Anandnagar, Ambernath (E), Dist. Thane, Maharashtra, India - 421506</p>
+    </div>
+  </header>
+  <hr>
   <body>
-    <h1>Work Order No: {{data.workOrderNo}}</h1>
-    <h2>Company Name: {{data.companyName}}</h2>
-
+    <div class='table-title'>
+      <h1>Work Order No: {{data.workOrderNo}}</h1>
+      <h2>For {{data.companyName}}</h2></div>
     <ol>
       {{#each data.product}}
         <li>
           <h3>Product Code: {{productCode}}</h3>
           <h3>Product Name: {{productName}}</h3>
           <h3>Quantity: {{qty}}</h3>
-          <table>
+          <table class='table-main'>
             <thead>
               <tr>
                 <th>Material Name</th>
@@ -36,7 +66,7 @@
                 <tr>
                   <td>{{material.name}}</td>
                   <td>{{material.description}}</td>
-                  <td>{{qty}}</td>
+                  <td>{{ multiply ../qty qty }}</td>
                 </tr>
               {{/each}}
             </tbody>
@@ -44,6 +74,17 @@
         </li>
       {{/each}}
     </ol>
-
   </body>
+  <footer>
+    <div class="footer-col">
+      <p>sales@mimicproducts.in</p>
+    </div>
+    <div class="footer-col">
+      <p>+91-9029668938 / +91-8850128485</p>
+    </div>
+    <div class="footer-col background-color:white">
+      <p>mimicproducts.in</p>
+    </div>
+  </footer>
+  
 </html>

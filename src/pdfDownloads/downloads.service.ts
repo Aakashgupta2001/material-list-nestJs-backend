@@ -33,7 +33,7 @@ hbs.registerHelper('sum', function (numberOne, numberTwo) {
 });
 
 hbs.registerHelper('multiply', function (numberOne, numberTwo) {
-  return parseFloat(numberOne) + parseFloat(numberTwo);
+  return parseFloat(numberOne) * parseFloat(numberTwo);
 });
 
 @Injectable()
@@ -90,3 +90,5 @@ export class DownloadService {
     return 'index.hbs';
   };
 }
+
+export default DownloadService;
