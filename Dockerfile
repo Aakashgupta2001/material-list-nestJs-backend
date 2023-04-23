@@ -42,6 +42,8 @@ RUN npm run build
 # Set NODE_ENV environment variable
 ENV NODE_ENV production
 
+
+
 # Running `npm ci` removes the existing node_modules directory and passing in --only=production ensures that only the production dependencies are installed. This ensures that the node_modules directory is as optimized as possible
 RUN npm ci --only=production && npm cache clean --force
 
@@ -58,4 +60,6 @@ COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
 COPY --chown=node:node --from=build /usr/src/app/dist ./dist
 
 # Start the server using the production build
+EXPOSE 3001
+
 CMD [ "node", "dist/main.js" ]
