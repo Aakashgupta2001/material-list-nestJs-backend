@@ -32,6 +32,10 @@ hbs.registerHelper('sum', function (numberOne, numberTwo) {
   return parseFloat(numberOne) + parseFloat(numberTwo);
 });
 
+hbs.registerHelper('multiply', function (numberOne, numberTwo) {
+  return parseFloat(numberOne) + parseFloat(numberTwo);
+});
+
 @Injectable()
 export class DownloadService {
   constructor(
@@ -43,7 +47,7 @@ export class DownloadService {
     const user = req.user._id;
     console.log(name);
     let templateName = '';
-    let data:any;
+    let data: any;
     if (name == 'workOrder') {
       templateName = 'workOrder';
 
