@@ -15,6 +15,27 @@ COPY --chown=node:node package*.json ./
 # Install app dependencies using the `npm ci` command instead of `npm install`
 RUN npm ci
 
+RUN apk add --no-cache \
+      chromium \
+      nss \
+      freetype \
+      harfbuzz \
+      ca-certificates \
+      ttf-freefont \
+      nodejs \
+      yarn
+
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+
+RUN yarn add puppeteer@13.5.0
+
+# Add user so we don't need --no-sandbox.
+RUN addgroup -S pptruser && adduser -S -G pptruser pptruser \
+    && mkdir -p /home/pptruser/Downloads /app \
+    && chown -R pptruser:pptruser /home/pptruser \
+    && chown -R pptruser:pptruser /app
+
+    
 # Bundle app source
 COPY --chown=node:node . .
 
@@ -26,6 +47,9 @@ USER node
 ###################
 
 FROM node:18-alpine As build
+
+
+
 
 WORKDIR /usr/src/app
 

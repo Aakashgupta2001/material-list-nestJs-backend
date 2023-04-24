@@ -67,11 +67,13 @@ export class DownloadService {
 
     if (templateName == '') throw new HttpException('Pdf Not Found', 401);
     const content = await fsPromise(
-      process.cwd() + `/views/${templateName}.hbs`,
+      process.cwd() + `/dist/views/${templateName}.hbs`,
       {
         encoding: 'utf8',
       },
     );
+
+    console.log('a');
 
     // data = { abc: 'helo' };
     console.log(data);
