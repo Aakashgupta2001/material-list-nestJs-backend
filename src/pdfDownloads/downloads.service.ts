@@ -81,7 +81,9 @@ export class DownloadService {
     const html = template({ data });
     console.log(html);
 
-    const htmlToPdf = new HTMLToPDF(html);
+    const browserOptions = { args: ['--no-sandbox'] };
+    const options = { browserOptions };
+    const htmlToPdf = new HTMLToPDF(html, options);
     const pdf = await htmlToPdf.convert();
 
     console.log(pdf);
