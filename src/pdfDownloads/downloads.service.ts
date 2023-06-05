@@ -76,17 +76,15 @@ export class DownloadService {
     console.log('a');
 
     // data = { abc: 'helo' };
-    console.log(data);
+    console.log(data.product[0].material);
     const template = hbs.compile(content);
     const html = template({ data });
-    console.log(html);
 
     const browserOptions = { args: ['--no-sandbox'] };
     const options = { browserOptions };
     const htmlToPdf = new HTMLToPDF(html, options);
     const pdf = await htmlToPdf.convert();
 
-    console.log(pdf);
     return pdf;
   }
 

@@ -69,7 +69,7 @@
                 <tr>
                   <td>{{material.name}}</td>
                   <td>{{material.description}}</td>
-                  <td>{{ multiply ../qty qty }}</td>
+                  <td>{{qty}} X {{../qty}} - {{ multiply ../qty qty }}</td>
                 </tr>
               {{/each}}
             </tbody>
