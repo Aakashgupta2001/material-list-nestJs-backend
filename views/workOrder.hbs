@@ -77,6 +77,36 @@
         </li>
       {{/each}}
     </ol>
+    <ol>
+      {{#each data.product}}
+        <li>
+          <h3>Product Code: {{productCode}}</h3>
+          <h3>Product Type: {{producttype}}</h3>
+          <h3>Product Name: {{productName}}</h3>
+          <h3>Quantity: {{qty}}</h3>
+          <table class='table-second'>
+            <thead>
+              <tr>
+                <th>Material Name</th>
+                <th>Material Type</th>
+                <th>Description</th>
+                <th>Quantity</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each material}}
+                <tr>
+                  <td>{{material.name}}</td>
+                  <td>{{material.type}}</td>
+                  <td>{{material.description}}</td>
+                  <td>{{qty}} X {{../qty}} - {{ multiply ../qty qty }}</td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </li>
+      {{/each}}
+    </ol>
   </body>
   <footer>
     <div class="footer-col">
