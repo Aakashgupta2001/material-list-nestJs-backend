@@ -45,40 +45,125 @@
       <p><strong>Company Address:</strong> <br>Steam Airetric Controls <br> A-34, Additional Ambernath MIDC, <br>Anandnagar, Ambernath (E), Dist. Thane, Maharashtra, India - 421506</p>
     </div>
   </header>
+  
   <hr>
   <body>
     <div class='table-title'>
       <h1>Work Order No: {{data.workOrderNo}}</h1>
       <h2>For {{data.companyName}}</h2></div>
+      <h2>Date- {{dateFormat data.date}}</h2></div>
     <ol>
       {{#each data.product}}
         <li>
           <h3>Product Code: {{productCode}}</h3>
           <h3>Product Name: {{productName}}</h3>
           <h3>Quantity: {{qty}}</h3>
+
+          {{#if (cheackAllMaterialType material "moulding")}}
           <table class='table-main'>
             <thead>
               <tr>
                 <th>Material Name</th>
+                <th>Material Type</th>
                 <th>Description</th>
                 <th>Quantity</th>
               </tr>
             </thead>
             <tbody>
               {{#each material}}
+                {{#if (checkMaterial material.materialType "moulding")}}
                 <tr>
                   <td>{{material.name}}</td>
+                  <td>{{material.materialType}}</td>
                   <td>{{material.description}}</td>
                   <td>{{qty}} X {{../qty}} - {{ multiply ../qty qty }}</td>
                 </tr>
+                {{/if}}
               {{/each}}
             </tbody>
           </table>
+          {{/if}}
+
+          {{#if (cheackAllMaterialType material "electronic")}}
+          <table class='table-main'>
+            <thead>
+              <tr>
+                <th>Material Name</th>
+                <th>Material Type</th>
+                <th>Description</th>
+                <th>Quantity</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each material}}
+                {{#if (checkMaterial material.materialType "electronic")}}
+                <tr>
+                  <td>{{material.name}}</td>
+                  <td>{{material.materialType}}</td>
+                  <td>{{material.description}}</td>
+                  <td>{{qty}} X {{../qty}} - {{ multiply ../qty qty }}</td>
+                </tr>
+                {{/if}}
+              {{/each}}
+            </tbody>
+          </table>
+          {{/if}}
+          
+          {{#if (cheackAllMaterialType material "hardware")}}
+          <table class='table-main'>
+            <thead>
+              <tr>
+                <th>Material Name</th>
+                <th>Material Type</th>
+                <th>Description</th>
+                <th>Quantity</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each material}}
+                {{#if (checkMaterial material.materialType "hardware")}}
+                <tr>
+                  <td>{{material.name}}</td>
+                  <td>{{material.materialType}}</td>
+                  <td>{{material.description}}</td>
+                  <td>{{qty}} X {{../qty}} - {{ multiply ../qty qty }}</td>
+                </tr>
+                {{/if}}
+              {{/each}}
+            </tbody>
+          </table>
+          {{/if}}
+
+          {{#if (cheackAllMaterialType material "others")}}
+          <table class='table-main'>
+            <thead>
+              <tr>
+                <th>Material Name</th>
+                <th>Material Type</th>
+                <th>Description</th>
+                <th>Quantity</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each material}}
+                {{#if (checkMaterial material.materialType "others")}}
+                <tr>
+                  <td>{{material.name}}</td>
+                  <td>{{material.materialType}}</td>
+                  <td>{{material.description}}</td>
+                  <td>{{qty}} X {{../qty}} - {{ multiply ../qty qty }}</td>
+                </tr>
+                {{/if}}
+              {{/each}}
+            </tbody>
+          </table>
+          {{/if}}
+
         </li>
       {{/each}}
     </ol>
   </body>
-  <footer>
+  {{!-- <footer>
     <div class="footer-col">
       <p>sales@mimicproducts.in</p>
     </div>
@@ -88,6 +173,6 @@
     <div class="footer-col background-color:white">
       <p>mimicproducts.in</p>
     </div>
-  </footer>
+  </footer> --}}
   
 </html>

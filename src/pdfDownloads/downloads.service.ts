@@ -4,7 +4,7 @@ import { promisify } from 'util';
 import * as fs from 'fs';
 import { join } from 'path';
 import { HttpException } from '@nestjs/common';
-
+import * as moment from 'moment';
 const fsPromise = promisify(fs.readFile);
 
 import { OrderService } from '../order/order.service';
@@ -36,6 +36,22 @@ hbs.registerHelper('multiply', function (numberOne, numberTwo) {
   return parseFloat(numberOne) * parseFloat(numberTwo);
 });
 
+hbs.registerHelper('checkMaterial', function (type, material) {
+  return type == material;
+});
+
+hbs.registerHelper('dateFormat', function (date) {
+  return moment(date).format('DD/MM/YYYY');
+});
+hbs.registerHelper('cheackAllMaterialType', function (material, type) {
+  for (let i = 0; i < material.length; i++) {
+    if (material[i].material.materialType == type) {
+      return true;
+    }
+  }
+  return false;
+});
+
 @Injectable()
 export class DownloadService {
   constructor(
@@ -45,7 +61,6 @@ export class DownloadService {
 
   async downloadPdf(req, id, name) {
     const user = req.user._id;
-    console.log(name);
     let templateName = '';
     let data: any;
     if (name == 'workOrder') {
@@ -73,15 +88,37 @@ export class DownloadService {
       },
     );
 
-    console.log('a');
+    let footerContent = await fsPromise(
+      process.cwd() + `/dist/views/${templateName}.hbs`,
+      {
+        encoding: 'utf8',
+      },
+    );
 
+    const footerTemplate = hbs.compile(footerContent);
+    const footer = footerTemplate({ data });
     // data = { abc: 'helo' };
-    console.log(data.product[0].material);
     const template = hbs.compile(content);
     const html = template({ data });
 
     const browserOptions = { args: ['--no-sandbox'] };
-    const options = { browserOptions };
+    const pdfOptions = {
+      margin: {
+        top: 30,
+        /** Right margin. */
+        right: 10,
+        /** Bottom margin. */
+        bottom: 10,
+        /** Left margin. */
+        left: 10,
+      },
+      // displayHeaderFooter: true,
+      // footerTemplate: footer,
+    };
+    const options = {
+      browserOptions,
+      pdfOptions,
+    };
     const htmlToPdf = new HTMLToPDF(html, options);
     const pdf = await htmlToPdf.convert();
 
