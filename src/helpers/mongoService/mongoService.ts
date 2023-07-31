@@ -41,7 +41,7 @@ export const find = async (
   sort = {},
   populate = '',
 ) => {
-  console.log(filter);
+  // console.log(filter);
   return await model
     .find(filter, projection)
     .skip(pagination.skip)
