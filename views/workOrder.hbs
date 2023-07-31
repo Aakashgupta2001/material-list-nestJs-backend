@@ -59,30 +59,6 @@
           <h3>Product Name: {{productName}}</h3>
           <h3>Quantity: {{qty}}</h3>
 
-          {{#if (cheackAllMaterialType material "moulding")}}
-          <table class='table-main'>
-            <thead>
-              <tr>
-                <th>Material Name</th>
-                <th>Material Type</th>
-                <th>Description</th>
-                <th>Quantity</th>
-              </tr>
-            </thead>
-            <tbody>
-              {{#each material}}
-                {{#if (checkMaterial material.materialType "moulding")}}
-                <tr>
-                  <td>{{material.name}}</td>
-                  <td>{{material.materialType}}</td>
-                  <td>{{material.description}}</td>
-                  <td>{{qty}} X {{../qty}} - {{ multiply ../qty qty }}</td>
-                </tr>
-                {{/if}}
-              {{/each}}
-            </tbody>
-          </table>
-          {{/if}}
 
           {{#if (cheackAllMaterialType material "electronic")}}
           <table class='table-main'>
@@ -97,6 +73,31 @@
             <tbody>
               {{#each material}}
                 {{#if (checkMaterial material.materialType "electronic")}}
+                <tr>
+                  <td>{{material.name}}</td>
+                  <td>{{material.materialType}}</td>
+                  <td>{{material.description}}</td>
+                  <td>{{qty}} X {{../qty}} - {{ multiply ../qty qty }}</td>
+                </tr>
+                {{/if}}
+              {{/each}}
+            </tbody>
+          </table>
+          {{/if}}
+
+          {{#if (cheackAllMaterialType material "moulding")}}
+          <table class='table-main'>
+            <thead>
+              <tr>
+                <th>Material Name</th>
+                <th>Material Type</th>
+                <th>Description</th>
+                <th>Quantity</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each material}}
+                {{#if (checkMaterial material.materialType "moulding")}}
                 <tr>
                   <td>{{material.name}}</td>
                   <td>{{material.materialType}}</td>
