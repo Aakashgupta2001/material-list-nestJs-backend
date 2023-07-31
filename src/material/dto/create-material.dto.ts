@@ -6,6 +6,9 @@ export class CreateMaterialDto {
   name: string;
 
   @IsOptional()
+  unit: string;
+
+  @IsOptional()
   description: string;
 
   @IsNotEmpty()

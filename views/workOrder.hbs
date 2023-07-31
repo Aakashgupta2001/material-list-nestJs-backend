@@ -79,9 +79,9 @@
                   <td>{{material.name}}</td>
                   <td>{{material.materialType}}</td>
                   <td>{{material.description}}</td>
-                  <td>{{qty}}</td>
-                  <td> {{../qty}}</td>
-                  <td>{{qty}} X {{../qty}} = {{ multiply ../qty qty }}</td>
+                  <td>{{qty}} {{material.unit}}</td>
+                  <td> {{../qty}} </td>
+                  <td>{{qty}} X {{../qty}} = {{ multiply ../qty qty }} {{material.unit}}</td>
                 </tr>
                 {{/if}}
               {{/each}}
@@ -108,9 +108,9 @@
                   <td>{{material.name}}</td>
                   <td>{{material.materialType}}</td>
                   <td>{{material.description}}</td>
-                  <td>{{qty}}</td>
+                  <td>{{qty}} {{material.unit}}</td>
                   <td> {{../qty}}</td>
-                  <td>{{qty}} X {{../qty}} = {{ multiply ../qty qty }}</td>
+                  <td>{{qty}} X {{../qty}} = {{ multiply ../qty qty }} {{material.unit}}</td>
                 </tr>
                 {{/if}}
               {{/each}}
@@ -137,9 +137,9 @@
                   <td>{{material.name}}</td>
                   <td>{{material.materialType}}</td>
                   <td>{{material.description}}</td>
-                  <td>{{qty}}</td>
+                  <td>{{qty}} {{material.unit}}</td>
                   <td> {{../qty}}</td>
-                  <td>{{qty}} X {{../qty}} = {{ multiply ../qty qty }}</td>
+                  <td>{{qty}} X {{../qty}} = {{ multiply ../qty qty }} {{material.unit}}</td>
                 </tr>
                 {{/if}}
               {{/each}}
@@ -166,9 +166,9 @@
                     <td>{{material.name}}</td>
                     <td>{{material.materialType}}</td>
                     <td>{{material.description}}</td>
-                    <td>{{qty}}</td>
+                    <td>{{qty}} {{material.unit}}</td>
                     <td> {{../qty}}</td>
-                    <td>{{qty}} X {{../qty}} = {{ multiply ../qty qty }}</td>
+                    <td>{{qty}} X {{../qty}} = {{ multiply ../qty qty }} {{material.unit}}</td>
                 </tr>
                 {{/if}}
               {{/each}}
