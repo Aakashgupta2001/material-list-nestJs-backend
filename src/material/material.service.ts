@@ -8,6 +8,7 @@ import { UpdateMaterialDto } from './dto/update-material.dto';
 import { MaterialDocument, Material } from './schema/material.schema';
 import { generateRandomString } from '../helpers/helpers';
 import * as mongoService from '../helpers/mongoService/mongoService';
+import { HttpException } from '@nestjs/common';
 
 @Injectable()
 export class MaterialService {
@@ -22,7 +23,16 @@ export class MaterialService {
       this.materialModel,
       { user: req.user._id },
     );
+    const existingMat = await mongoService.findOne(this.materialModel, {
+      name: createMaterialDto.name,
+      active: true,
+      user: req.user._id,
+    });
+    if (existingMat) {
+      throw new HttpException('Material Already Exists', 401);
+    }
     createMaterialDto['user'] = req.user._id;
+    console.log('CREATED MATERIAL');
     return await mongoService.create(this.materialModel, createMaterialDto);
   }
 
